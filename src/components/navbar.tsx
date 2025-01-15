@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { enhanceMenuWithCustomKeys } from '../utils/compute-menu-items';
 import parseMenu from '../utils/dom-parser';
 import { NAV_SELECTOR } from '../utils/env';
@@ -5,6 +7,14 @@ import NavbarDesktop from './desktop';
 // import NavbarMobile from './mobile';
 
 function Navbar() {
+  const [, setRendered] = React.useState(false);
+
+  React.useEffect(() => {
+    if (import.meta.env.DEV) {
+      setRendered(true);
+    }
+  }, []);
+
   const menuEl = document.querySelector(NAV_SELECTOR);
 
   if (!menuEl) {

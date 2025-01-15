@@ -6,7 +6,7 @@ import shop from '../assets/navbar/shopping-nav.png';
 import logoMobile from '../assets/navbar/logo-nav-mobile.png';
 import logoMobileText from '../assets/navbar/title-logo-mobile.png';
 
-export default function CoreNavbarHeader() {
+function Header() {
   return (
     <div className="flex flex-col items-center laptop:flex-row laptop:justify-between laptop:p-4 laptop:pl-12 laptop:pr-12">
       <img className="hidden w-20 laptop:flex" src={logoNav} />
@@ -43,3 +43,5 @@ export default function CoreNavbarHeader() {
     </div>
   );
 }
+
+export default Header;

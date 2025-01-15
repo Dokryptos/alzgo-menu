@@ -1,9 +1,10 @@
 import { enhanceMenuWithCustomKeys } from '../utils/compute-menu-items';
 import parseMenu from '../utils/dom-parser';
 import { NAV_SELECTOR } from '../utils/env';
-import CoreNavbarMenu from './menu';
+import NavbarDesktop from './desktop';
+import NavbarMobile from './mobile';
 
-export default function CoreNavbar() {
+function Navbar() {
   const menuEl = document.querySelector(NAV_SELECTOR);
 
   if (!menuEl) {
@@ -22,8 +23,10 @@ export default function CoreNavbar() {
 
   return (
     <nav className="w-full select-none flex-col">
-      {/* <CoreNavbarHeader /> */}
-      <CoreNavbarMenu data={data} />
+      <NavbarDesktop data={data} />
+      <NavbarMobile data={data} />
     </nav>
   );
 }
+
+export default Navbar;

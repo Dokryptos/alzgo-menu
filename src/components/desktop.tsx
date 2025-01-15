@@ -1,5 +1,6 @@
 import { cn } from '../utils/cn';
 import { NavbarItem } from '../types/navbar-item';
+import Icon from './icon';
 
 interface CategoryItemProps {
   item: NavbarItem;
@@ -30,17 +31,21 @@ interface ParentMenuItemProps {
 }
 
 function ParentMenuItem({ parent }: ParentMenuItemProps) {
+  const hasChildren = parent.children && parent.children.length > 0;
+
   return (
     <li className="group">
       <a
         href={parent.to}
         key={parent.id}
-        className="mx-8 flex w-full p-2 font-semibold text-white transition hover:text-second_blue"
+        className="mx-8 flex w-full gap-2 p-2 font-semibold text-white transition hover:text-second_blue"
       >
         {parent.label}
+
+        {hasChildren && <Icon name="chevron-down" className="transition duration-200 group-hover:rotate-180" />}
       </a>
 
-      {parent.children && parent.children.length > 0 && (
+      {hasChildren && (
         <div
           className={cn(
             'fixed left-1/2 -translate-x-1/2 pt-2', // fixed position
@@ -55,7 +60,7 @@ function ParentMenuItem({ parent }: ParentMenuItemProps) {
               'grid grid-cols-4 grid-rows-[repeat(minmax(1fr,150px),3)] gap-8' // grid layout
             )}
           >
-            {parent.children.map(
+            {parent.children!.map(
               (child) => child.children && child.children.length > 0 && <CategoryItem key={child.id} item={child} />
             )}
           </ul>

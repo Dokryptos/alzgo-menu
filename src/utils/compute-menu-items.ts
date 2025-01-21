@@ -2,9 +2,9 @@ import { NavbarItem } from '../types/navbar-item';
 import { MenuItem } from './dom-parser';
 import { BASE_URL } from './env';
 
-const board = '/assets/board.svg';
+const tableaudebord = '/assets/board.svg';
 const carrosserie = '/assets/carrosserie.svg';
-const démarrage = '/assets/demarrage.svg';
+const demarrage = '/assets/demarrage.svg';
 const direction = '/assets/direction.svg';
 const divers = '/assets/divers.svg';
 const eclairage = '/assets/eclairage.svg';
@@ -12,21 +12,21 @@ const freinage = '/assets/freinage.svg';
 const habitacle = '/assets/habitacle.svg';
 const moteur = '/assets/moteur.svg';
 const multimedia = '/assets/multimedia.svg';
-const vitesse = '/assets/vitesse.svg';
+const boitedevitesse = '/assets/vitesse.svg';
 const antipollution = '/assets/antipollution.svg';
 
 const imgMap: { [key: string]: string } = {
-  'tableau de bord': board,
+  tableaudebord,
   carrosserie,
-  démarrage,
+  demarrage,
   direction,
   divers,
-  éclairage: eclairage,
+  eclairage,
   freinage,
   habitacle,
   moteur,
-  multimédia: multimedia,
-  'boîte de vitesse': vitesse,
+  multimedia,
+  boitedevitesse,
   antipollution,
 };
 
@@ -34,10 +34,12 @@ function enhanceMenuWithCustomKeys(menuItems: MenuItem[]): NavbarItem[] {
   return menuItems.map((item) => {
     const id = item.text
       .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]/g, '');
+      .replace(/\s+/g, '') // remove spaces
+      .normalize('NFD') // remove accents
+      .replace(/[-/_]/g, '') // remove - / _
+      .replace(/[^\w]/g, ''); // remove non-word characters
     const to = new URL(item.href).pathname;
-    const img = `${BASE_URL}${imgMap[item.text.toLowerCase()] || board}`;
+    const img = `${BASE_URL}${imgMap[id] || tableaudebord}`;
 
     return {
       id,

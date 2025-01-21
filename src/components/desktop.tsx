@@ -8,14 +8,9 @@ interface CategoryItemProps {
 
 function CategoryItem({ item }: CategoryItemProps) {
   const hasManyChildren = (item.children?.length || 0) > 6;
+
   return (
-    <li
-      className={cn(
-        'text-base',
-        hisManyChildren && 'row-span-2'
-        // Add Row-span if too much children
-      )}
-    >
+    <li className={cn('text-base', hasManyChildren && 'row-span-2')}>
       <img src={item.img} className="lg:w-20" />
 
       <p className="mb-2 mt-4 font-semibold text-black">{item.label}</p>
@@ -33,21 +28,21 @@ function CategoryItem({ item }: CategoryItemProps) {
   );
 }
 
-interface ParentMenuItemProps {
-  parent: NavbarItem;
+interface DesktopNavItemProps {
+  item: NavbarItem;
 }
 
-function DesktopNavItem({ parent }: ParentMenuItemProps) {
-  const hasChildren = parent.children && parent.children.length > 0;
+function DesktopNavItem({ item }: DesktopNavItemProps) {
+  const hasChildren = item.children && item.children.length > 0;
 
   return (
     <li className="group relative h-full">
       <a
-        href={parent.to}
-        key={parent.id}
+        href={item.to}
+        key={item.id}
         className="flex size-full items-center gap-1 p-2 text-lg font-semibold text-white transition hover:!text-second_blue"
       >
-        {parent.label}
+        {item.label}
 
         {hasChildren && <Icon name="chevron-down" className="size-4 transition duration-200 group-hover:rotate-180" />}
       </a>
@@ -72,10 +67,10 @@ function DesktopNavItem({ parent }: ParentMenuItemProps) {
           <ul
             className={cn(
               'size-full overflow-auto rounded-sm bg-white p-8 pb-32 shadow',
-              'grid grid-cols-4 xl:grid-cols-5 grid-rows-[repeat(minmax(1fr,150px),3)] gap-8' // grid layout
+              'grid grid-cols-4 grid-rows-[repeat(minmax(1fr,150px),3)] gap-8 xl:grid-cols-5' // grid layout
             )}
           >
-            {parent.children!.map(
+            {item.children!.map(
               (child) => child.children && child.children.length > 0 && <CategoryItem key={child.id} item={child} />
             )}
           </ul>
